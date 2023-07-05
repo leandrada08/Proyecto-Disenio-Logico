@@ -16,7 +16,7 @@ architecture LCD_Disp_arc of LCD_Disp is
 Type arrayData is array (0 to 12) of STD_LOGIC_VECTOR(7 downto 0);
 
 signal Datas: arrayData;
-signal TempVal   : INTEGER := 1;
+signal TempVal   : INTEGER;
 signal TempVal_1 : INTEGER range 0 to 9:= 1;
 signal TempVal_2 : INTEGER range 0 to 9:= 1;
 signal TempVal_3 : INTEGER range 0 to 9:= 1;
@@ -114,7 +114,7 @@ Datas(8) <=  x"2B" when '0',
 LCD_proc: process(Clk)
        
        variable i : integer := 0;
-       variable j : integer := 0;
+       variable j : integer range 0 to 32 := 0;
       
    begin
        if (Clk'event and Clk = '1') then
@@ -131,10 +131,10 @@ LCD_proc: process(Clk)
           end if;
 
 	  if(j < 4) then LCD_RS <= '0';  						  -- Command Signal --
-     elsif (j >= 4 and j < 32) then lcd_rs <= '1';   -- Data Signal -- 
+     elsif (j >= 4 and j <= 32) then lcd_rs <= '1';   -- Data Signal -- 
      end if;
 
-	  if(j = 32) then j := 0;                -- Repeat Data Display Routine --
+	  if(j >= 32) then j := 0;                -- Repeat Data Display Routine --
           end if;
        end if;
    end process LCD_proc;

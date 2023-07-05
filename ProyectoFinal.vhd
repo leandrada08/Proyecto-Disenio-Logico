@@ -8,7 +8,7 @@ entity ProyectoFinal is
         clk : in std_logic;
         inputs : in std_logic;
         uart : in std_logic;
-		  --OpCode : in std_logic_vector(3 downto 0);
+		  OpCode : in std_logic_vector(3 downto 0);
         lcd_data : out std_logic_vector(7 downto 0);
 		  lcd_enable, lcd_rs : OUT STD_LOGIC;
 		  lcd_rw : out std_LOGIC:='0';
@@ -34,7 +34,7 @@ architecture ProyectoFinal_a of ProyectoFinal is
 		-- Señales intermedia entre la entrada y la unidad de control
 	 signal UART_8bit: std_logic_vector(7 downto 0);
 	 signal CodeReg: std_logic_vector(5 downto 0);
-	 signal OpCode: std_logic_vector(3 downto 0);
+	 --signal OpCode: std_logic_vector(3 downto 0);
     signal BUSCpu,LCDControl : std_logic_vector(31 downto 0);
 	 signal ALU_A,ALU_B : std_logic_vector(31 downto 0);
 	 signal addressBanco : std_logic_vector(2 downto 0);
@@ -53,7 +53,7 @@ begin
 	ReceptorUart: entity work.RxUart port map(clk, reset, uart,rx_done,UART_8bit);
 	
 	-- Bloque InputSystem
-	BloqueEntrada : entity work.InputSystem port map(clk,reset, enableControlBusIN, rx_done ,UART_8bit , ALU_control,OpCode,CodeReg, BUSCpu);	
+	BloqueEntrada : entity work.InputSystem port map(clk,reset, enableControlBusIN, rx_done ,UART_8bit , ALU_control,CodeReg, BUSCpu);	
 	
 	
 	-- Bloque Unidad de Control

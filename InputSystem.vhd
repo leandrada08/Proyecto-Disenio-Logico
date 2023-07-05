@@ -10,7 +10,7 @@ entity InputSystem is
 		  rx_done: in std_logic;
         input_data: in std_logic_vector(7 downto 0);
         output_data_ALU: out std_logic_vector(1 downto 0);
-        output_data_OpCode: out std_logic_vector(3 downto 0);
+        --output_data_OpCode: out std_logic_vector(3 downto 0);
 		  output_data_Reg : out std_logic_vector(5 downto 0);
         output_data_32bits: out std_logic_vector(31 downto 0)
     );
@@ -22,7 +22,7 @@ architecture InputSystem_a of InputSystem is
 begin
 
 	 output_data_ALU <= register_data(1 downto 0);
-    output_data_OpCode <= register_data(3 downto 0);
+    --output_data_OpCode <= register_data(3 downto 0);
     output_data_Reg <= register_data(9 downto 4);
 	 
     process (reset, rx_done)
@@ -49,8 +49,8 @@ begin
     process (enable, register_data, clk)
     begin
         if enable = '1' then
-            output_data_32bits(5 downto 0) <= register_data(15 downto 10);
-	        output_data_32bits(31 downto 6) <=(others => '0');
+            output_data_32bits(7 downto 0) <= register_data(7 downto 0);
+	        output_data_32bits(31 downto 8) <=(others => '0');
         else
             output_data_32bits <= (others => 'Z');
         end if;
