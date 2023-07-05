@@ -10,22 +10,26 @@ entity InputSystem is
 		  rx_done: in std_logic;
         input_data: in std_logic_vector(7 downto 0);
         output_data_ALU: out std_logic_vector(1 downto 0);
-        output_data_OpCode: out std_logic_vector(3 downto 0);
-		output_data_Reg : out std_logic_vector(5 downto 0);
+        --output_data_OpCode: out std_logic_vector(3 downto 0);
+		  output_data_Reg : out std_logic_vector(5 downto 0);
         output_data_32bits: out std_logic_vector(31 downto 0)
     );
 end entity InputSystem;
 
 architecture InputSystem_a of InputSystem is
-    signal register_data: std_logic_vector(15 downto 0); --Nuevo
+    signal register_data: std_logic_vector(15 downto 0):="0000000000000000"; --Nuevo
     signal state: integer range 0 to 1 := 0;
-	 signal uart_prev: std_logic_vector(31 downto 0);
 begin
+
+	 output_data_ALU <= register_data(1 downto 0);
+    --output_data_OpCode <= register_data(3 downto 0);
+    output_data_Reg <= register_data(9 downto 4);
+	 
     process (reset, rx_done,clk)
     begin
 		if reset = '0' then
 			-- Reset values
-			register_data <= (others => '0');
+			register_data <= "0000000000000000";
             state <= 0;
         elsif rising_edge(rx_done) then
 				-- State machine
@@ -40,9 +44,6 @@ begin
         end if;
     end process;
     
-    output_data_ALU <= register_data(1 downto 0);
-    output_data_OpCode <= register_data(3 downto 0);
-    output_data_Reg <= register_data(9 downto 4);
 
 	 
     process (enable, register_data, clk)
@@ -56,3 +57,5 @@ begin
     end process;
     
 end architecture InputSystem_a ;
+
+

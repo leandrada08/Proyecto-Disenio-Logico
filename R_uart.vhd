@@ -1,15 +1,23 @@
-LIBRARY ieee;
-USE ieee.std_logic_1164.ALL;
-USE ieee.numeric_std.ALL;
+-- Codigo de la ingeniera.
+--
+---------------------------------------------------------------------------------------------------
 
-ENTITY R_uart IS PORT (
-    rx, reset, clk : IN STD_LOGIC := '1';
-    rx_done : OUT STD_LOGIC := '1';
-    dato : OUT STD_LOGIC_VECTOR (7 DOWNTO 0) := x"00"
-	 );
-END R_uart;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
-architecture R_uart_a of R_uart is
+entity R_uart is port (
+    clk   : in std_logic;
+    reset : in std_logic;
+
+    rx : in std_logic;
+
+    rx_done : out std_logic;
+    dato    : out std_logic_vector(7 downto 0) := x"00"
+);
+end entity;
+
+architecture a_R_uart of R_uart is
 
     type mef is (idle, start, data, stop);
 

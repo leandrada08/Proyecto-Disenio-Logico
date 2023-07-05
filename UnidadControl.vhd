@@ -50,7 +50,7 @@ begin
                 if enable = '0' then
                     if opcode = "1001" then
                         nextState <= Store;
-                    elsif opcode = "1000" then
+                    elsif opcode = "1111" then
                         nextState <= Load;
                     elsif opcode(3) = '0' then
                         nextState <= Ari1;

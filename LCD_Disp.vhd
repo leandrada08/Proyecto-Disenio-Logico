@@ -131,7 +131,7 @@ LCD_proc: process(Clk)
           end if;
 
 	  if(j < 4) then LCD_RS <= '0';  						  -- Command Signal --
-     elsif (j >= 4 and j <= 32) then lcd_rs <= '1';   -- Data Signal -- 
+     elsif (j >= 4 and j < 32) then lcd_rs <= '1';   -- Data Signal -- 
      end if;
 
 	  if(j = 32) then j := 0;                -- Repeat Data Display Routine --

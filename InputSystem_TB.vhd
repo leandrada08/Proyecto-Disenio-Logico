@@ -5,7 +5,8 @@ use ieee.numeric_std.all;
 entity InputSystem_TB is
 end entity InputSystem_TB;
 
-architecture tb_arch of InputSystem_TB is
+
+architecture InputSystem_TB_arch of InputSystem_TB is
     -- Component declaration for the DUT (Design Under Test)
     component InputSystem
         port (
@@ -36,8 +37,7 @@ architecture tb_arch of InputSystem_TB is
 
 begin
     -- Instantiate the DUT
-    dut: InputSystem
-        port map (
+    uut: InputSystem port map (
             clk => tb_clk,
             reset => tb_reset,
             enable => tb_enable,
@@ -49,19 +49,20 @@ begin
             output_data_32bits => tb_output_data_32bits
         );
 
-
 		  
-	 
-	 
+	 tb_clk <= not tb_clk after 5 ns;
+	
     -- Stimulus process
     stimulus: process
     begin
-		
-		  tb_reset <= '0'; 
-		  wait for 10 ns;
+        tb_reset <= '0';
+        tb_enable <= '0';
+        tb_rx_done <= '0';
+        tb_input_data <= (others => '0');
+        wait for 10 ns;
         tb_reset <= '1';
-		  wait for 10 ns;
-		  
+        wait for 10 ns;
+
         -- Initialize inputs
         tb_enable <= '0';
         tb_rx_done <= '0';
@@ -72,55 +73,54 @@ begin
 
         -- Generate stimulus
         tb_input_data <= "11111111"; -- First input value
-		  wait for 10 ns;
+        wait for 10 ns;
         tb_rx_done <= '1';
-		  wait for 10 ns;
-		  tb_rx_done <= '0';
-		  wait for 10 ns;
-		  tb_input_data <= "00000000";
-		  wait for 10 ns;
+        wait for 10 ns;
+        tb_rx_done <= '0';
+        wait for 10 ns;
+        tb_input_data <= "00000000";
+		  tb_enable <= '1';
+        wait for 10 ns;
         tb_rx_done <= '1';
-		  wait for 10 ns;
-		  tb_rx_done <= '0';
-		  wait for 10 ns;
-		  
-		  
-		  assert tb_output_data_ALU = "11" report "ALU output mal" severity error;
-        assert tb_output_data_OpCode = "1111" report "OpCode output mal" severity error;
-        assert tb_output_data_Reg = "001111" report "Reg output mal" severity error;
-        assert tb_output_data_32bits = "00000000000000000000000011111111" report "32bits output mal" severity error;
-		  
-		  
-		  
-		  tb_input_data <= "01010101";
-		  wait for 10 ns;
+        wait for 10 ns;
+        tb_rx_done <= '0';
+        wait for 10 ns;
+
+        -- Check outputs
+        assert tb_output_data_ALU = "11" report "ALU1 output incorrect" severity error;
+        assert tb_output_data_OpCode = "1111" report "OpCode1 output incorrect" severity error;
+        assert tb_output_data_Reg = "001111"report "Reg1 output incorrect" severity error;
+        assert tb_output_data_32bits = "00000000000000000000000000000000" report "32bits1 output incorrect" severity error;
+
+        tb_input_data <= "01010101";
+        wait for 10 ns;
         tb_rx_done <= '1';
-		  wait for 10 ns;
-		  tb_rx_done <= '0';
-		  wait for 10 ns;
-		  tb_input_data <= "00000000";
-		  wait for 10 ns;
+        wait for 10 ns;
+        tb_rx_done <= '0';
+        wait for 10 ns;
+        tb_input_data <= "00000000";
+        wait for 10 ns;
         tb_rx_done <= '1';
-		  wait for 10 ns;
-		  tb_rx_done <= '0';
-		  wait for 10 ns;
+        wait for 10 ns;
+        tb_rx_done <= '0';
+        wait for 10 ns;
 
         tb_enable <= '1'; -- enable data storage
         wait for 10 ns;
-			
-			-- Aqui debereriamos tener almacena el valor:
-			-- 00000000 01010101 00000000 11111111
-			-- ----Cte Imm -----|--Reg --|-OpCode-|
-			--                                |ALU|
-		  
+
+        -- Aqui debereriamos tener almacena el valor:
+        -- 00000000 01010101 00000000 11111111
+        -- ----Cte Imm -----|--Reg --|-OpCode-|
+        --                                |ALU|
+
         -- Check outputs
-        assert tb_output_data_ALU = "11" report "ALU output mal" severity error;
-        assert tb_output_data_OpCode = "11111111" report "OpCode output mal" severity error;
-        assert tb_output_data_Reg = "00000000" report "Reg output mal" severity error;
-        assert tb_output_data_32bits = "00000000000000000000000001010101" report "32bits output mal" severity error;
-		  
+        assert tb_output_data_ALU = "01" report "ALU2 output incorrect" severity error;
+        assert tb_output_data_OpCode = "0101" report "OpCode2 output incorrect" severity error;
+        assert tb_output_data_Reg = "000101" report "Reg2 output incorrect" severity error;
+        assert tb_output_data_32bits = "00000000000000000000000000000000" report "32bits2 output incorrect" severity error;
 
         wait;
     end process;
 
-end architecture tb_arch;
+end architecture InputSystem_TB_arch;
+
