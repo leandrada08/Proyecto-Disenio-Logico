@@ -14,27 +14,27 @@ begin
     begin
         case input_vector is
             when "0000" =>
-                output_vector <= "1000000"; -- '0'
+                output_vector <= not("1000000"); -- '0'
             when "0001" =>
-                output_vector <= "1111001"; -- '1'
+                output_vector <= not("1111001"); -- '1'
             when "0010" =>
-                output_vector <= "0100100"; -- '2'
+                output_vector <= not("0100100"); -- '2'
             when "0011" =>
-                output_vector <= "0110000"; -- '3'
+                output_vector <= not("0110000"); -- '3'
             when "0100" =>
-                output_vector <= "0011001"; -- '4'
+                output_vector <= not("0011001"); -- '4'
             when "0101" =>
-                output_vector <= "0010010"; -- '5'
+                output_vector <= not("0010010"); -- '5'
             when "0110" =>
-                output_vector <= "0000010"; -- '6'
+                output_vector <= not("0000010"); -- '6'
             when "0111" =>
-                output_vector <= "1111000"; -- '7'
+                output_vector <= not("1111000"); -- '7'
             when "1000" =>
-                output_vector <= "0000000"; -- '8'
+                output_vector <= not("0000000"); -- '8'
             when "1001" =>
-                output_vector <= "0010000"; -- '9'
+                output_vector <= not("0010000"); -- '9'
             when others =>
-                output_vector <= "1111111"; -- Invalid input, display '-'
+                output_vector <= not("1111111"); -- Invalid input, display '-'
         end case;
     end process;
 end architecture SieteSegmentoDisplay_a;

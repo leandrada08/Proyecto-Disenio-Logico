@@ -22,7 +22,7 @@ END ENTITY;
 ARCHITECTURE RxUart_a OF RxUart IS
     SIGNAL clk_960011 : STD_LOGIC;
 BEGIN
-    conta9600 : ENTITY work.conta GENERIC MAP (0, 325)PORT MAP(clk, '0', '1', clk_960011, OPEN);
+    conta9600 : ENTITY work.conta GENERIC MAP (0, 325)PORT MAP(clk, '1', '1', clk_960011, OPEN);
     ut_r_uart : ENTITY work.R_uart PORT MAP(rx,reset,clk_960011,rx_done,dato);
 
 END RxUart_a;

@@ -56,7 +56,7 @@ begin
 	
 	
 	-- Bloque Unidad de Control
-	ContadorControl : entity work.conta generic map(0,25000000) port map(clk, '0','1',clks,open);
+	ContadorControl : entity work.conta generic map(0,25000000) port map(clk, '1','1',clks,open);
 	UnidadControl1 : entity work.UnidadControl port map(input,OpCode,CodeReg, clks, reset, enableControlBusIN,
 																		enableControlBusB, enableControlBusBanco, enableWriteBanco,
 																		enableWriteOut, enableWriteA, enableWriteB, enableReadBanco, 
