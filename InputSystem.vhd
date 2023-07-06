@@ -23,7 +23,8 @@ begin
 
 	 output_data_ALU <= register_data(1 downto 0);
     --output_data_OpCode <= register_data(3 downto 0);
-    output_data_Reg <= register_data(9 downto 4);
+    output_data_Reg(2 downto 0) <= register_data(10 downto 8);
+	 output_data_Reg(5 downto 3) <= register_data(14 downto 12);
 	 
     process (reset, rx_done)
     begin
